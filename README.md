@@ -23,7 +23,7 @@ https://hwi0201.github.io/Subscription-Tracker/
 
 ```
 ├── index.html          # Main HTML structure
-├── style.css           # Styling and Y2K theme
+├── style.css           # Styling theme
 ├── app.js              # Core application logic
 └── storage.js          # Data management
 ```
