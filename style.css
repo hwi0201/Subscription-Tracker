@@ -1229,13 +1229,13 @@ textarea.form-input {
     }
 
     .top-icons svg {
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
     }
 
     .clock {
-        font-size: 1rem;
-        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
     }
 
     /* Desktop Area */
@@ -1265,18 +1265,18 @@ textarea.form-input {
     }
 
     .icon-box {
-        width: 60px;
-        height: 60px;
-        border-radius: 0.75rem;
+        width: 50px;
+        height: 50px;
+        border-radius: 0.5rem;
     }
 
     .icon-box svg {
-        width: 30px;
-        height: 30px;
+        width: 24px;
+        height: 24px;
     }
 
     .icon-label {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
     }
 
     /* Date Widget */
