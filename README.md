@@ -2,6 +2,9 @@
 
 A retro-styled web application for managing your subscription services
 
+## Website Link 
+https://hwi0201.github.io/Subscription-Tracker/
+
 ## Features
 
 - Track active and inactive subscriptions
@@ -20,7 +23,7 @@ A retro-styled web application for managing your subscription services
 
 ```
 ├── index.html          # Main HTML structure
-├── style.css           # Styling and Y2K theme
+├── style.css           # Styling theme
 ├── app.js              # Core application logic
 └── storage.js          # Data management
 ```
