@@ -2,7 +2,7 @@
 
 A retro-styled web application for managing your subscription services
 
-## Link 
+## Website Link 
 https://hwi0201.github.io/Subscription-Tracker/
 
 ## Features
