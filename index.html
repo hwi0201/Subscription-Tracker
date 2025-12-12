@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="bios-screen" class="active">
+        <div id="bios-content">
+            <div class="bios-header">
+                <span>Subscription Tracker System (C)2025</span>
+                <span>Sogang University</span>
+            </div>
+            <div id="boot-sequence"></div>
+            <div style="position: fixed; bottom: 2rem; left: 2rem;">
+                Network Media Final Project<br>
+                Art & Technology
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Desktop -->
+    <div id="top-bar">
+        <div class="logo">
+            <span class="logo-kim">Subscription Tracker</span>
+        </div>
+        <div class="top-right">
+            <div class="user-email">gnlrud5641@sogang.ac.kr</div>
+            <div class="top-icons">
+                <i data-lucide="volume-2" id="music-icon" style="cursor: pointer;"></i>
+                <i data-lucide="mail"></i>
+                <i data-lucide="battery"></i>
+            </div>
+            <div id="clock" class="clock">12:00 PM</div>
+        </div>
+    </div>
+
+    <div id="desktop">
+        <!-- Click Effect Container -->
+        <div id="click-effects"></div>
+
+        <!-- Desktop Widgets -->
+        <div class="desktop-widget date-widget">
+            <div class="widget-content">
+                <div id="current-date" class="date-display"></div>
+                <div id="current-day" class="day-display"></div>
+            </div>
+        </div>
+
+        <!-- Polaroid Style Widget -->
+        <div class="polaroid-widget" style="top: 18%; left: 25%; transform: rotate(-5deg);">
+            <div class="polaroid-photo">
+                <div class="polaroid-content">
+                    <div class="polaroid-icon">
+                        <i data-lucide="wallet"></i>
+                    </div>
+                    <div class="polaroid-text">Track Your</div>
+                    <div class="polaroid-text">Subs</div>
+                </div>
+            </div>
+            <div class="polaroid-caption">Stay organized!</div>
+        </div>
+
+        <div class="polaroid-widget" style="top: 42%; right: 25%; transform: rotate(8deg);">
+            <div class="polaroid-photo">
+                <div class="polaroid-content">
+                    <div class="polaroid-icon">
+                        <i data-lucide="bell"></i>
+                    </div>
+                    <div class="polaroid-text">Payment</div>
+                    <div class="polaroid-text">Alerts</div>
+                </div>
+            </div>
+            <div class="polaroid-caption">Stay on track</div>
+        </div>
+
+        <div class="desktop-icons">
+            <div class="desktop-icon" onclick="openWindowWithTab('dashboard')">
+                <div class="icon-box">
+                    <i data-lucide="layout-dashboard"></i>
+                </div>
+                <div class="icon-label">DASHBOARD</div>
+            </div>
+            <div class="desktop-icon" onclick="openWindowWithTab('calendar')">
+                <div class="icon-box">
+                    <i data-lucide="calendar"></i>
+                </div>
+                <div class="icon-label">CALEANDAR</div>
+            </div>
+            <div class="desktop-icon" onclick="openWindowWithTab('statistics')">
+                <div class="icon-box">
+                    <i data-lucide="trending-up"></i>
+                </div>
+                <div class="icon-label">STATISTICS</div>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('about')">
+                <div class="icon-box dark">
+                    <i data-lucide="user"></i>
+                </div>
+                <div class="icon-label">ABOUT ME</div>
+            </div>
+        </div>
+
+        <!-- Subscription Tracker Window -->
+        <div id="tracker-window" class="window" style="left: 50%; top: 50%; transform: translate(-50%, -50%); width: 90vw; max-width: 1200px; height: 85vh;">
+            <div class="window-header" onmousedown="startDrag(event, 'tracker-window')">
+                <div class="window-title">
+                    <i data-lucide="bar-chart-3" style="width: 16px; height: 16px;"></i>
+                    <span>Subscription Tracker</span>
+                </div>
+                <div class="window-controls">
+                    <button class="window-btn minimize" onclick="closeWindow('tracker')">
+                        <i data-lucide="minus" style="width: 14px; height: 14px;"></i>
+                    </button>
+                    <button class="window-btn maximize">
+                        <i data-lucide="square" style="width: 14px; height: 14px;"></i>
+                    </button>
+                    <button class="window-btn close" onclick="closeWindow('tracker')">
+                        <i data-lucide="x" style="width: 14px; height: 14px;"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="app-toolbar">
+                    <div class="tab-group">
+                        <button class="tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard')">
+                            <i data-lucide="layout-dashboard" style="width: 14px; height: 14px;"></i> DASHBOARD
+                        </button>
+                        <button class="tab-btn" data-tab="calendar" onclick="switchTab('calendar')">
+                            <i data-lucide="calendar" style="width: 14px; height: 14px;"></i> CALENDAR
+                        </button>
+                        <button class="tab-btn" data-tab="statistics" onclick="switchTab('statistics')">
+                            <i data-lucide="trending-up" style="width: 14px; height: 14px;"></i> STATISTICS
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="action-btn-small" onclick="exportData()" title="Export Data">
+                            <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+                        </button>
+                        <button class="action-btn-small" onclick="document.getElementById('import-file').click()" title="Import Data">
+                            <i data-lucide="upload" style="width: 16px; height: 16px;"></i>
+                        </button>
+                        <input type="file" id="import-file" accept=".json" style="display: none;" onchange="importData(event)">
+                        <button class="add-btn" onclick="openModal()">+ Add New</button>
+                    </div>
+                </div>
+                
+                <!-- Dashboard Tab -->
+                <div id="dashboard-tab" class="tab-content active">
+                    <div class="app-content">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-label">Total Subscriptions</div>
+                                <div class="stat-value" id="total-subs">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Monthly Cost</div>
+                                <div class="stat-value" id="monthly-cost">$0.00</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Yearly Cost</div>
+                                <div class="stat-value" id="yearly-cost">$0</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Average Cost</div>
+                                <div class="stat-value" id="avg-cost">$0.00</div>
+                            </div>
+                        </div>
+
+                        <div class="subscription-list">
+                            <div class="list-header">
+                                <div class="sortable" onclick="sortSubscriptions('name')">
+                                    Service <span class="sort-icon">↕</span>
+                                </div>
+                                <div>Category</div>
+                                <div class="sortable" onclick="sortSubscriptions('price')">
+                                    Cost <span class="sort-icon">↕</span>
+                                </div>
+                                <div>Billing</div>
+                                <div class="sortable" onclick="sortSubscriptions('date')">
+                                    Next Payment <span class="sort-icon">↕</span>
+                                </div>
+                                <div>Actions</div>
+                            </div>
+                            <div id="subscription-items"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar Tab -->
+                <div id="calendar-tab" class="tab-content">
+                    <div class="app-content">
+                        <div class="calendar-header">
+                            <button class="calendar-nav-btn" onclick="changeMonth(-1)">
+                                <i data-lucide="chevron-left"></i>
+                            </button>
+                            <h2 id="calendar-month-year"></h2>
+                            <button class="calendar-nav-btn" onclick="changeMonth(1)">
+                                <i data-lucide="chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="calendar-grid" id="calendar-grid"></div>
+                        <div class="calendar-legend">
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #000;"></div>
+                                <span>Payment Due</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Tab -->
+                <div id="statistics-tab" class="tab-content">
+                    <div class="app-content">
+                        <div class="charts-grid">
+                            <div class="chart-card">
+                                <h3 class="chart-title"><i data-lucide="pie-chart" style="width: 18px; height: 18px;"></i> Spending by Category</h3>
+                                <div id="category-chart"></div>
+                            </div>
+                            <div class="chart-card">
+                                <h3 class="chart-title"><i data-lucide="list" style="width: 18px; height: 18px;"></i> Category Details</h3>
+                                <div id="trend-chart"></div>
+                            </div>
+                            <div class="chart-card">
+                                <h3 class="chart-title"><i data-lucide="refresh-cw" style="width: 18px; height: 18px;"></i> Payment Period Distribution</h3>
+                                <div id="payment-chart"></div>
+                            </div>
+                            <div class="chart-card">
+                                <h3 class="chart-title"><i data-lucide="trophy" style="width: 18px; height: 18px;"></i> Most Expensive Subscriptions (TOP 5)</h3>
+                                <div id="period-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Me Window -->
+        <div id="about-window" class="window" style="left: 50%; top: 50%; transform: translate(-50%, -50%); width: 90vw; max-width: 900px; height: 85vh;">
+            <div class="window-header" onmousedown="startDrag(event, 'about-window')">
+                <div class="window-title">
+                    <i data-lucide="user" style="width: 16px; height: 16px;"></i>
+                    <span>About Me</span>
+                </div>
+                <div class="window-controls">
+                    <button class="window-btn minimize" onclick="closeWindow('about')">
+                        <i data-lucide="minus" style="width: 14px; height: 14px;"></i>
+                    </button>
+                    <button class="window-btn maximize">
+                        <i data-lucide="square" style="width: 14px; height: 14px;"></i>
+                    </button>
+                    <button class="window-btn close" onclick="closeWindow('about')">
+                        <i data-lucide="x" style="width: 14px; height: 14px;"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="about-content">
+                    <div class="about-layout">
+                        <!-- Sidebar -->
+                        <div class="about-sidebar">
+                            <div class="profile-image">
+                                <img src="image/profile.jpg" alt="Profile">
+                            </div>
+                            <div class="profile-info">
+                                <h2>HwiGyeong Kim</h2>
+                                <p class="subtitle">Art & Technology</p>
+                            </div>
+                            <div class="contact-buttons">
+                                <button class="contact-btn" onclick="navigator.clipboard.writeText('gnlrud5641@sogang.ac.kr'); alert('Email copied to clipboard!');">
+                                    <i data-lucide="mail"></i> Contact Me
+                                </button>
+                                <a href="https://github.com/hwi0201" target="_blank" class="contact-btn">
+                                    <i data-lucide="github"></i> GitHub
+                                </a>
+                                <a href="https://hwi0201.github.io" target="_blank" class="contact-btn">
+                                    <i data-lucide="globe"></i> Website
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Main Content -->
+                        <div class="about-main">
+                            <section class="about-section">
+                                <h3>
+                                    <i data-lucide="user"></i>
+                                    About Me
+                                </h3>
+                                <p>
+                                    Hello! I'm a student at Sogang University studying Art & Technology.
+                                    I'm currently taking Network Media course and learning about web development and digital design.
+                                    This subscription tracker is my final project, designed with a retro operating system theme.
+                                </p>
+                            </section>
+
+                            <section class="about-section">
+                                <h3>
+                                    <i data-lucide="code"></i>
+                                    Learning
+                                </h3>
+                                <div class="skills-grid">
+                                    <div class="skill-category">
+                                        <h4>Web Development</h4>
+                                        <ul>
+                                            <li>HTML5 & CSS3</li>
+                                            <li>JavaScript</li>
+                                            <li>Responsive Design</li>
+                                        </ul>
+                                    </div>
+                                    <div class="skill-category">
+                                        <h4>Tools & Interests</h4>
+                                        <ul>
+                                            <li>Git & GitHub</li>
+                                            <li>VS Code</li>
+                                            <li>UI/UX Design</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="about-section">
+                                <h3>
+                                    <i data-lucide="briefcase"></i>
+                                    Project
+                                </h3>
+                                <div class="project-card">
+                                    <div class="project-header">
+                                        <h4>Subscription Tracker</h4>
+                                        <span class="featured-badge">Final Project</span>
+                                    </div>
+                                    <p>
+                                        A web-based subscription management system with dashboard, calendar, and statistics features.
+                                        Track recurring payments, visualize spending patterns, and receive payment notifications.
+                                        Built with vanilla JavaScript and LocalStorage.
+                                    </p>
+                                    <div class="tech-tags">
+                                        <span>JavaScript</span>
+                                        <span>HTML/CSS</span>
+                                        <span>LocalStorage</span>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="about-section">
+                                <h3>
+                                    <i data-lucide="graduation-cap"></i>
+                                    Education
+                                </h3>
+                                <div class="education-item">
+                                    <p class="edu-meta">Sogang University • 2021 - Present</p>
+                                    <p class="edu-desc">
+                                        Double Major in Art & Technology and Computer Science & Engineering.
+                                        Interested in AI and game development.
+                                    </p>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="subscription-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Add New Subscription</div>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="subscription-form">
+                    <div class="form-group">
+                        <label class="form-label">Service Name *</label>
+                        <input type="text" class="form-input" id="service-name" required placeholder="e.g. Netflix">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Price (₩) *</label>
+                            <input type="number" class="form-input" id="price" step="1" required placeholder="10000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Period</label>
+                            <select class="form-select" id="period">
+                                <option value="monthly">Monthly</option>
+                                <option value="yearly">Yearly</option>
+                                <option value="weekly">Weekly</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category *</label>
+                        <select class="form-select" id="category" required>
+                            <option value="">Select Category</option>
+                            <option value="Streaming">Streaming</option>
+                            <option value="Music">Music</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Software">Software</option>
+                            <option value="Gaming">Gaming</option>
+                            <option value="Fitness">Fitness</option>
+                            <option value="Education">Education</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Start Date (First Payment)</label>
+                            <input type="date" class="form-input" id="next-payment" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Payment Method</label>
+                            <input type="text" class="form-input" id="payment-method" placeholder="e.g. Visa, PayPal">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <div class="toggle-container">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="is-active" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label">Active Subscription</span>
+                        </div>
+                        <p class="form-hint">Turn off if you've cancelled but want to keep the record</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes (Optional)</label>
+                        <textarea class="form-input" id="notes" rows="3" placeholder="Additional notes..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSubscription()">Add Subscription</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="storage.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
