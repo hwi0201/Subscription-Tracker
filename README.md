@@ -16,7 +16,7 @@ https://hwi0201.github.io/Subscription-Tracker/
 ## Tech Stack
 
 - HTML, CSS, JavaScript
-- LocalStorage for data persistence
+- Firebase for data persistence
 - Lucide icons
 
 ## File Structure

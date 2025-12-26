@@ -40,8 +40,8 @@ function bootSystem() {
 }
 
 // Initialize Application
-function initializeApp() {
-    subscriptions = Storage.getAll();
+async function initializeApp() {
+    subscriptions = await Storage.getAll();
     renderDashboard();
     renderCalendar();
     renderStatistics();
@@ -488,7 +488,7 @@ function closeModal() {
     editingId = null;
 }
 
-function saveSubscription() {
+async function saveSubscription() {
     const name = document.getElementById('service-name').value;
     const price = document.getElementById('price').value;
     const period = document.getElementById('period').value;
@@ -515,12 +515,12 @@ function saveSubscription() {
     };
 
     if (editingId) {
-        Storage.update(editingId, subscription);
+        await Storage.update(editingId, subscription);
     } else {
-        Storage.add(subscription);
+        await Storage.add(subscription);
     }
 
-    subscriptions = Storage.getAll();
+    subscriptions = await Storage.getAll();
     renderDashboard();
     renderCalendar();
     renderStatistics();
@@ -528,8 +528,8 @@ function saveSubscription() {
     closeModal();
 }
 
-function editSubscription(id) {
-    const sub = Storage.getById(id);
+async function editSubscription(id) {
+    const sub = await Storage.getById(id);
     if (!sub) return;
 
     editingId = id;
@@ -547,10 +547,10 @@ function editSubscription(id) {
     document.getElementById('subscription-modal').classList.add('active');
 }
 
-function deleteSubscription(id) {
+async function deleteSubscription(id) {
     if (confirm('Are you sure you want to delete this subscription?')) {
-        Storage.delete(id);
-        subscriptions = Storage.getAll();
+        await Storage.delete(id);
+        subscriptions = await Storage.getAll();
         renderDashboard();
         renderCalendar();
         renderStatistics();
@@ -711,8 +711,8 @@ function sendNotification(subscription, daysUntil) {
 }
 
 // Export Data to JSON
-function exportData() {
-    const data = Storage.getAll();
+async function exportData() {
+    const data = await Storage.getAll();
     const dataStr = JSON.stringify(data, null, 2);
     const blob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -729,12 +729,12 @@ function exportData() {
 }
 
 // Import Data from JSON
-function importData(event) {
+async function importData(event) {
     const file = event.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = async function(e) {
         try {
             const data = JSON.parse(e.target.result);
 
@@ -746,8 +746,8 @@ function importData(event) {
 
             // Confirm before importing
             if (confirm(`This will replace your current data with ${data.length} subscription(s). Continue?`)) {
-                Storage.saveAll(data);
-                subscriptions = Storage.getAll();
+                await Storage.saveAll(data);
+                subscriptions = await Storage.getAll();
                 renderDashboard();
                 renderCalendar();
                 renderStatistics();
