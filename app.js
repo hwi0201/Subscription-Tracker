@@ -419,9 +419,9 @@ function renderStatistics() {
         const monthly = sub.period === 'yearly' ? parseFloat(sub.price) / 12 : 
                        sub.period === 'weekly' ? parseFloat(sub.price) * 4 : parseFloat(sub.price);
         return `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: ${index === 0 ? '#FFF9E6' : '#F9FAFB'}; border-radius: 8px; margin-bottom: 0.5rem; border: ${index === 0 ? '2px solid #FFD700' : '1px solid #E5E5E5'};">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: ${index === 0 ? '#F0F0F0' : '#F9FAFB'}; border-radius: 8px; margin-bottom: 0.5rem; border: ${index === 0 ? '2px solid #B0B0B0' : '1px solid #E5E5E5'};">
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div style="font-size: 1.5rem; font-weight: 700; color: ${index === 0 ? '#FFD700' : '#666'}; width: 32px;">${index + 1}</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: ${index === 0 ? '#808080' : '#666'}; width: 32px;">${index + 1}</div>
                     <div>
                         <div style="font-weight: 700; font-size: 1rem;">${sub.name}</div>
                         <div style="color: #666; font-size: 0.875rem;">${sub.category} • ${sub.period}</div>
